@@ -1,0 +1,94 @@
+*
+{
+	cursor: url(cursor.cur),default; /*Cursor personalizado*/
+	font-size: 25px;
+}
+#actHis
+{
+	width: 20px;
+	height: 20px;
+}
+body
+{
+	display: flex;
+	flex-direction: column;
+	background-color: grey;
+}
+iframe
+{
+	margin: 20px;
+	border-radius: 10px;
+}
+#header-prin ul li
+{
+	display: inline;
+}
+#header-search
+{
+	width: fit-content;
+	padding: 10px;
+	border: ridge black 1px;
+	background: lightgray;
+	margin: 15px;
+}
+#header-search form div label
+{
+	font-weight: bold;
+}
+#header-search form div
+{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 20px;
+	width: fit-content;
+	margin: 25px;
+}
+#header-des
+{
+	width: fit-content;
+	padding: 10px;
+	border: ridge black 1px;
+	background: lightgray;
+	margin: 15px;
+}
+.footer-prin
+{
+	display: flex;
+	flex-direction: column;
+	position: fixed;
+	width: 570px;
+	border: ridge black 1px;
+	background: lightgray;
+	bottom: 0px;
+}
+footer a
+{
+	font-size: 70px;
+}
+footer a i
+{
+	display: inline;
+	padding: 10px;
+}
+footer a i:hover
+{
+	cursor: pointer;
+}
+.youtube
+{
+	color: red;
+}
+.paypal
+{
+	color: blue;
+}
+.youtube:hover
+{
+	color: fuchsia;
+	
+}
+.paypal:hover
+{
+	color: fuchsia;
+}

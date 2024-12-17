@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="application-name" content="MiVideoTube">
+	<meta name="description" content="Una página libre de restricciones donde la gente puede subir cualquier video,insertando el link de youtube 😃">
+	<meta name="author" content="Patrick Martínez">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="icon/MVTIcon.png">
+	<link rel="stylesheet" type="text/css" href="MVTstyle.css">
+	<!-- ICONOS CON FONT AWESOME-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<title>MiVideoTube V 1.1</title>
+</head>
+<body onload="Comp();">
+	<div id="header-prin" style="font-family: Arial;">
+		<nav>
+			<ul>
+				<li><img src="icon/MVTIcon.png" width="100" height="100"></li>
+				<li>MiVideoTube V 1.1</li>
+				
+			</ul>
+		</nav>
+	</div>
+	<div id="header-des">
+		<p><b>Descripción:</b> Un sitio diseñado para ti, añade tus videos,imágenes y páginas favoritas 😉.</p>
+		<h3>Notas versión 1.0:</h3>
+		<ul>
+			<li>Nota 1: algunas páginas no funcionan por derechos de author u otros motivos.</li>
+			<li>Nota 2: ¡al momento de iniciar la página podrás añadir cuantos videos, páginas o imágenes quieras!.</li>
+			<li>Nota 3: ¡el contenido que coloques se guarda en un localStorage!, por lo que podras consultar tus videos/páginas/imágenes cuando lo necesites 😮.</li>
+			<li>Nota 4: cuando reinicies la página ya no podras añadir mas contenido debido a las limitaciones deL host.</li>
+			<li>Nota 5: el historial de links no funciona de manera correcta.</li>
+			<li>Nota 6: buscador no disponible, ayúdame con donaciones para expandir este proyecto a una base de datos 🙂🤗</li>
+		</ul>
+	</div>
+	<div id="header-search">
+		<form method="get" id="Searchtab">
+			<div>
+				<div>
+					<label>Buscar:</label>
+					<input type="search" name="Buscador" placeholder="No disponible aún">
+				</div>
+				<div>
+					<label>Insertar video 😎:</label>
+					<input type="text" id="vidUrl" name="InsUrl" autocomplete="on" placeholder="Inserte su URL de youtube" value="" onchange="Load(this.value);" onfocus="this.value=null;">
+				</div>
+			</div>
+			<div>
+				<div>
+					<label for="histBorrar">Resetear historial:</label>
+					<button onclick="Reset();">Resetear localStorage</button>
+				</div>
+				<div>
+					<label id="btnHistorial">Activar historial:</label>
+					<input id="actHis" type="checkbox" onclick="His(this.checked);" checked="true">
+				</div>
+				<div>
+					<input type="button" onclick="BorrarhisLinks();" value="Borrar historial de links">
+				</div>
+			</div>
+			<script type="text/javascript" src="MVT.js"></script>
+		</form>
+	</div>
+			<script>
+				var num = 0;
+				var vids = 0;
+				var links = [];
+				var tope;
+				function Reset()
+				{
+					localStorage.clear();
+				}
+				function Comp()
+				{
+					if ($('iframe').length > 0) {
+						localStorage.removeItem("videos");
+					}
+					else
+					{
+						if(localStorage.getItem("videos") !=null)
+						{
+							tope = parseInt(localStorage.getItem("videos"));
+							for (var i = 0; i < tope; i++) {
+								var ifrm = document.createElement("iframe");
+								ifrm.setAttribute("src",localStorage.getItem(i.toString()));
+								ifrm.style.width = "860px";
+				        		ifrm.style.height = "640px";
+				        		document.getElementById("header-search").appendChild(ifrm);
+							}
+							
+						}
+						else
+						{
+							alert('Añada un video');
+							var listaText = document.createElement("p");
+							listaText.textContent = "Links usados:";
+							document.body.appendChild(listaText);
+						}
+					}
+				}
+				function Load(valorUrl)
+				{
+			        var ifrm = document.createElement("iframe");
+			        var linkData = document.createElement("p"); //Texto de cada link como referencia
+			        let ValorMovil ="";
+			        var ValorMaxMovil = 0;
+			        //Youtube conversión a video embebido
+			        if(valorUrl.includes("watch?v="))
+			        {
+			        	valorUrl = valorUrl.replace("watch?v=","embed/");
+			        }
+			        if(valorUrl.includes("youtu.be"))
+			        {
+			        	ValorMovil = valorUrl.substring(17); 
+			        	valorUrl = "https://www.youtube.com/embed/"+ValorMovil;
+			        }
+			        links[vids] = valorUrl; //Arreglo de valores para el storage
+			        localStorage.setItem(vids.toString(),valorUrl);
+			        ifrm.setAttribute("src", valorUrl);
+			        ifrm.style.width = "860px";
+				    ifrm.style.height = "640px";
+			        linkData.innerHTML = valorUrl;
+			        document.body.appendChild(linkData);
+			        num++;
+			        vids++;
+			        
+			        do
+			        {
+			        	document.getElementById("header-search").appendChild(ifrm);
+			        	num--;
+			        }
+			        while(num>0);
+			        localStorage.setItem("videos",vids); //Tope del storage actual
+			        alert('videos actuales añadidos: '+localStorage.getItem("videos")+', se borrarán los videos anteriores al añadido');
+			        //Mensajito para indicar cuantos elementos se alamacenarán realmente en el localStorage
+    			}
+			</script>
+</body>
+<div class="footer-prin">
+	<footer>
+			<input type="button" value="-" onclick="$('.footer-prin').hide();">
+			<b>Hecho por:</b> Patrick Martínez Moscoso Fernando 🇧🇴
+			<p>Apóyame en:</p>
+			<a class="youtube" href="https://www.youtube.com/channel/UCRCjLXpyYUZwl2upKltsrMg" target="_blank">
+				<i title="Mi canal de youtube" class="fa fa-youtube"></i>
+			</a>
+			<a class="paypal" href="https://www.paypal.com/myaccount/transfer/homepage" target="_blank">
+				<i title="Apoyáme en paypal para la versión 1.5" class="fa fa-paypal"></i>
+			</a>
+			<p>Cuenta para enviar el pago: pachill289@gmail.com</p>
+			&copy; 2021 MiVideoTube
+	</footer>
+</div>
+</html>
